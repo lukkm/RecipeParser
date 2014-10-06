@@ -1,10 +1,11 @@
 package interpreter;
 
+import interpreter.model.Recipe;
+import interpreter.parser.HTMLParser;
+import interpreter.parser.RecipeParser;
+
 import java.io.File;
 import java.io.IOException;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 
 public class RecipeInterpreter {
 
@@ -25,7 +26,19 @@ public class RecipeInterpreter {
 			throw new IllegalArgumentException("Output file already exists!.");
 		}
 		
-		Document doc = Jsoup.parse(inputFile, "UTF-8");
-		String rawText = doc.text();
+		HTMLParser parser = new HTMLParser(inputFile);
+		RecipeParser recipeParser = new RecipeParser(parser.getText());
+		
+		Recipe mainRecipe = new Recipe();
+		//mainRecipe.addAllIngredients(recipeParser.getIngredients());
+		//mainRecipe.setServings(recipeParser.getServings());
+		
+		System.out.println(recipeParser.getFullText());
+		System.out.println("");
+		
+		for (String s : recipeParser.removeThisMethod(recipeParser.getFullText())) {
+			System.out.println(s);
+		}
+		
 	}
 }
