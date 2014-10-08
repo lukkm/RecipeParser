@@ -2,9 +2,13 @@ package interpreter.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class HTMLParser {
 
@@ -20,8 +24,21 @@ public class HTMLParser {
 		document = Jsoup.parse(file, "UTF-8");
 	}
 	
+	public Document getDocument() {
+		return document;
+	}
+	
 	public String getText() {
-		return document.text();
+		return document.text().toLowerCase();
+	}
+	
+	public List<String> getListedItems() {
+		Elements elements = document.getElementsByTag("li");
+		List<String> elementList = new LinkedList<String>();
+		for (Element elem : elements) {
+			elementList.add(elem.text().toLowerCase());
+		}
+		return elementList;
 	}
 	
 }

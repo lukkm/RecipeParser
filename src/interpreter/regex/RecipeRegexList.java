@@ -11,21 +11,47 @@ enum Types {
 
 public class RecipeRegexList {
 	
-	private List<Pattern> patterns = new LinkedList<Pattern>();
+	private List<Pattern> startingPatterns = new LinkedList<Pattern>();
+	private List<List<Pattern>> simultaneousFilterPatterns = new LinkedList<List<Pattern>>();
+	private List<Pattern> filterPatterns = new LinkedList<Pattern>();
+	private List<Pattern> excludePatterns = new LinkedList<Pattern>();
 	
-	public void addPattern(Pattern pattern) {
-		patterns.add(pattern);
+	public void addFilterPattern(Pattern pattern) {
+		filterPatterns.add(pattern);
+	}
+	
+	public void addStartingPattern(Pattern pattern) {
+		startingPatterns.add(pattern);
+	}
+	
+	public void addSimultaneousFilterPatterns(List<Pattern> patterns) {
+		simultaneousFilterPatterns.add(patterns);
+	}
+	
+	public void addExcludingPattern(Pattern pattern) {
+		excludePatterns.add(pattern);
 	}
 	
 	public List<String> processText(String text) {
-		if (patterns.isEmpty()) {
+		if (startingPatterns.isEmpty()) {
 			return new LinkedList<String>();
 		}
-		List<String> finalMatches = RecipeRegexUtils.matchingPieces(text, patterns.get(0));
-		for (int i = 1; i < patterns.size(); i++) {
-			finalMatches = RecipeRegexUtils.matchingSubList(finalMatches, patterns.get(i));
+		List<String> finalMatches = RecipeRegexUtils.matchingPieces(text, startingPatterns);
+		return processList(finalMatches);
+	}
+	
+	public List<String> processList(List<String> list) {
+		List<String> finalMatches = list;
+		for (List<Pattern> lp : simultaneousFilterPatterns) {
+			finalMatches = RecipeRegexUtils.matchingSimultaneousSubList(list, lp);
+		}
+		for (Pattern p : filterPatterns) {
+			finalMatches = RecipeRegexUtils.matchingSubList(list, p);
+		}
+		for (Pattern p : excludePatterns) {
+			finalMatches = RecipeRegexUtils.excludingSubList(finalMatches, p);
 		}
 		return finalMatches;
 	}
-	
+			
 }
