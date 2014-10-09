@@ -4,11 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-enum Types {
-	QUANTITY,
-	INGREDIENT
-}
-
 public class RecipeRegexList {
 	
 	private List<Pattern> startingPatterns = new LinkedList<Pattern>();
@@ -43,7 +38,7 @@ public class RecipeRegexList {
 	public List<String> processList(List<String> list) {
 		List<String> finalMatches = list;
 		for (List<Pattern> lp : simultaneousFilterPatterns) {
-			finalMatches = RecipeRegexUtils.matchingSimultaneousSubList(list, lp);
+			finalMatches = RecipeRegexUtils.matchingSimultaneousSubList(finalMatches, lp);
 		}
 		for (Pattern p : filterPatterns) {
 			finalMatches = RecipeRegexUtils.matchingSubList(list, p);
