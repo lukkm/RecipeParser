@@ -18,15 +18,19 @@ public class RecipeParser {
 	
 	private static Pattern MONTHS = Pattern.compile(".*\\b(jan(uary)?|feb(ruary)?|mar(ch)?|apr(il)?|may|jun(e)?|jul(y)?|aug(ust)?|sep(tember)?|oct(ober)?|nov(ember)?|dec(ember)?)\\b.*");
 	
-	private static Pattern NUMBER = Pattern.compile("([0-9]+\\/[1-9]{1}[0-9]*|([0-9]+\\.[0-9]*)|([0-9]*\\.[0-9]+)|([0-9]+))(\\s[a-z,.;]+){0,8}");
-	private static Pattern NUMBER_WITH_WORDS = Pattern.compile("(one|two|three|four|five|six|seven|eight|nine|ten)(\\s[a-z0-9,.;]+){0,8}");
-	private static Pattern NUMERICAL_EXPRESSION = Pattern.compile(".*(\\s|^)\\b(a|an)\\b\\s.*");
+	private static Pattern NUMBER = Pattern.compile("([0-9]+\\/[1-9]{1}[0-9]*|([0-9]+\\.[0-9]*)|([0-9]*\\.[0-9]+)|([0-9]+))(\\s[a-z,.;:]+){0,5}");
+	private static Pattern NUMBER_WITH_WORDS = Pattern.compile("(one|two|three|four|five|six|seven|eight|nine|ten)(\\s[a-z0-9,.;:]+){0,5}");
 	
-	private static Pattern REFERENT_MEASURES = Pattern.compile(".*(tbsp|spoon|cup|pint|inch).*");
+	private static Pattern NUMBER_BEFORE = Pattern.compile("([a-z,.;:]+\\s){0,5}([0-9]+\\/[1-9]{1}[0-9]*|([0-9]+\\.[0-9]*)|([0-9]*\\.[0-9]+)|([0-9]+))");
+	private static Pattern NUMBER_WITH_WORDS_BEFORE = Pattern.compile("([a-z,.;:]+\\s){0,5}(one|two|three|four|five|six|seven|eight|nine|ten)");
+	
+	private static Pattern NUMERICAL_EXPRESSION = Pattern.compile("(a|an)(\\s[a-z0-9,.;:]+){0,5}");
+	
+	private static Pattern REFERENT_MEASURES = Pattern.compile(".*(stick|tbsp|spoon|cup|pint|inch|can).*");
 	private static Pattern RELATIVE_MEASURES = Pattern.compile(".*\\b(part(s)?|slice(s)?|dash(es)?)\\b.*");
-	private static Pattern METRIC_REFERENT_MEASURES = Pattern.compile(".*(ounc|gram|kilo|pound|quart|liter|gallon|cubic|cm|centimeter|meter|oz|cubic|cc|lb).*");
+	private static Pattern METRIC_REFERENT_MEASURES = Pattern.compile(".*(ounc|gram|kilo|pound|quart|liter|gallon|cubic|cm|centimeter|meter|oz|cubic|cc|lb|lb\\.|oz\\.|ml\\.|tsp\\.|tbsp\\.).*");
 	
-	private static Pattern TIME_MEASURES = Pattern.compile(".*\\b(min(s|ute(s)?)|sec(s|ond(s)?)|hour(s)?|hs)\\b.*");
+	private static Pattern TIME_MEASURES = Pattern.compile(".*\\b(min(s|ute|utes)|sec(s|ond|onds)|hour(s)?|hs)\\b.*");
 	
 	private static Pattern SERVING_REFERENCES = Pattern.compile(".*(serves|servi|people|person).*");
 	
@@ -44,6 +48,8 @@ public class RecipeParser {
 		// Find all the numbers with their surrounding words 
 		SERVINGS_PARSER.addStartingPattern(NUMBER);
 		SERVINGS_PARSER.addStartingPattern(NUMBER_WITH_WORDS);
+		SERVINGS_PARSER.addStartingPattern(NUMBER_BEFORE);
+		SERVINGS_PARSER.addStartingPattern(NUMBER_WITH_WORDS_BEFORE);
 		
 		// Find keywords for serving patterns
 		SERVINGS_PARSER.addFilterPattern(SERVING_REFERENCES);

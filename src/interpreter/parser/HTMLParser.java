@@ -12,7 +12,6 @@ import org.jsoup.select.Elements;
 
 public class HTMLParser {
 
-	private File file;
 	private Document document;
 	
 	public HTMLParser(String fileName) throws IOException {
@@ -20,7 +19,6 @@ public class HTMLParser {
 	}
 	
 	public HTMLParser(File file) throws IOException {
-		this.file = file;
 		document = Jsoup.parse(file, "UTF-8");
 	}
 	

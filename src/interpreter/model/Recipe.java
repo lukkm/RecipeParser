@@ -58,7 +58,7 @@ public class Recipe {
 		StringBuffer ings = new StringBuffer();
 		ings.append("ingredients ");
 		for (Ingredient ing : ingredients) {
-			ings.append(ing.getName() + " ");
+			ings.append(ing.getName() + ", ");
 		}
 		return ings.toString();
 	}
@@ -67,7 +67,7 @@ public class Recipe {
 		StringBuffer ings = new StringBuffer();
 		ings.append("orig_quantity ");
 		for (Ingredient ing : ingredients) {
-			ings.append(ing.getAmount() + " ");
+			ings.append(ing.getAmount() + ", ");
 		}
 		return ings.toString();
 	}
@@ -79,9 +79,9 @@ public class Recipe {
 			Pair<Double, String> metricAmount = UnitConverter.convertUnit(
 					ing.getAmount(), ing.getUnit());
 			if (metricAmount != null) {				
-				ings.append(metricAmount.fst + " ");
+				ings.append(metricAmount.fst + ", ");
 			} else {
-				ings.append("None ");
+				ings.append("None, ");
 			}
 		}
 		return ings.toString();
@@ -92,9 +92,9 @@ public class Recipe {
 		ings.append("orig_unit ");
 		for (Ingredient ing : ingredients) {
 			if (ing.getUnit() != null) {
-				ings.append(ing.getUnit() + " ");
+				ings.append(ing.getUnit() + ", ");
 			} else {
-				ings.append("None ");
+				ings.append("None, ");
 			}
 		}
 		return ings.toString();
@@ -107,9 +107,9 @@ public class Recipe {
 			Pair<Double, String> metricAmount = UnitConverter.convertUnit(
 					ing.getAmount(), ing.getUnit());
 			if (metricAmount != null) {				
-				ings.append(metricAmount.snd + " ");
+				ings.append(metricAmount.snd + ", ");
 			} else {
-				ings.append("None ");
+				ings.append("None, ");
 			}
 		}
 		return ings.toString();

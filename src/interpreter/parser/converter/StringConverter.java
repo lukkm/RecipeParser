@@ -5,7 +5,7 @@ import java.util.Map;
 
 public abstract class StringConverter<T> {
 
-	protected String writtenNumberPattern = "(one|two|three|four|five|six|seven|eight|nine|ten)";
+	protected String writtenNumberPattern = "(one|two|three|four|five|six|seven|eight|nine|ten|a|an)";
 	
 	protected Map<String, Integer> writtenNumbersMapping = new HashMap<String, Integer>();
 	
@@ -20,6 +20,8 @@ public abstract class StringConverter<T> {
 		writtenNumbersMapping.put("eight", 8);
 		writtenNumbersMapping.put("nine", 9);
 		writtenNumbersMapping.put("ten", 10);
+		writtenNumbersMapping.put("a", 1);
+		writtenNumbersMapping.put("an", 1);
 	}
 	
 	public abstract T convert(String s);

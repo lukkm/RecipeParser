@@ -32,7 +32,7 @@ public class IngredientConverter extends StringConverter<Ingredient> {
 		}
 		
 		if (ingredientString.contains("of")) {
-			ing.setName(ingredientString.substring(ingredientString.indexOf("of") + 3));
+			ing.setName(ingredientString.substring(ingredientString.indexOf("of") + 2));
 		} else {
 			String cleanIngredient = ingredientString;
 			if (amount != null) {
